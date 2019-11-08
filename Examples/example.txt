@@ -10,5 +10,11 @@ addListRow(i)
 }
 }
 
+maList = ["leon", "nils", "marc"]
+for x from 0 to 3
+{
+    paragraph(maList[x])
+}
+
 paragraph("Je suis un long paragraphe")
 paragraph(monTitre)
