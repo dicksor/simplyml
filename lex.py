@@ -1,15 +1,15 @@
 import ply.lex as lex
 
 reserved_words = {
-    'title',
-    'subtitle',
-    'list',
-    'addlistrow'
     'for',
     'from',
     'to',
-    'pragraph',
-
+    'while',
+    'array',
+    'arrayheader',
+    'arrayrow',
+    'bulletedlist',
+    'if'
 }
 
 tokens = (
@@ -19,6 +19,7 @@ tokens = (
     'ADD_OP',
     'MUL_OP',
     'COMP_OP',
+    'EOL'
 ) + tuple(map(lambda s : s.upper(), reserved_words))
 
 literals = '()"}{,[]='
