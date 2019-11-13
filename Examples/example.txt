@@ -1,20 +1,25 @@
-monTitre = "Exemple"
-title(monTitre)
-subTitle("Mon sous-titre")
+monTitre = "Exemple";
+title(monTitre);
+subTitle("Mon sous-titre");
 
-List
+for i from 0 to 10
+{
+    title(monTitre)
+}
+
+BulletedList
 {
 for i from 0 to 5
 {
 addListRow(i)
-}
-}
+};
+};
 
-maList = ["leon", "nils", "marc"]
+maList = ["leon", "nils", "marc"];
 for x from 0 to 3
 {
     paragraph(maList[x])
-}
+};
 
-paragraph("Je suis un long paragraphe")
+paragraph("Je suis un long paragraphe");
 paragraph(monTitre)

@@ -19,10 +19,9 @@ tokens = (
     'ADD_OP',
     'MUL_OP',
     'COMP_OP',
-    'EOL'
 ) + tuple(map(lambda s : s.upper(), reserved_words))
 
-literals = '()"}{,[]='
+literals = '()"}{,[]=;'
 
 def t_NUMBER(t):
     r'\d+(\.\d*)?'

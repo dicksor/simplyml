@@ -4,7 +4,7 @@ Grammar
 
 Rule 0     S' -> programme
 Rule 1     programme -> statement
-Rule 2     programme -> statement EOL programme
+Rule 2     programme -> statement ; programme
 Rule 3     statement -> assignation
 Rule 4     statement -> structure
 Rule 5     statement -> function
@@ -17,8 +17,8 @@ Rule 11    structure -> ARRAYHEADER { programme }
 Rule 12    structure -> ARRAYROW { programme }
 Rule 13    expression -> ( expression )
 Rule 14    expression -> NUMBER
-Rule 15    expression -> IDENTIFIER
-Rule 16    expression -> STRING
+Rule 15    expression -> STRING
+Rule 16    expression -> IDENTIFIER
 Rule 17    expression -> expression ADD_OP expression
 Rule 18    expression -> expression MUL_OP expression
 Rule 19    expression -> expression COMP_OP expression
@@ -32,6 +32,7 @@ Terminals, with rules where they appear
 (                    : 13 23
 )                    : 13 23
 ,                    : 22
+;                    : 2
 =                    : 20
 ADD_OP               : 17
 ARRAY                : 10
@@ -39,14 +40,13 @@ ARRAYHEADER          : 11
 ARRAYROW             : 12
 BULLETEDLIST         : 9
 COMP_OP              : 19
-EOL                  : 2
 FOR                  : 7
 FROM                 : 7
-IDENTIFIER           : 7 15 20 23
+IDENTIFIER           : 7 16 20 23
 IF                   : 8
 MUL_OP               : 18
 NUMBER               : 7 7 14
-STRING               : 16
+STRING               : 15
 TO                   : 7
 WHILE                : 6
 error                : 
@@ -69,7 +69,7 @@ state 0
 
     (0) S' -> . programme
     (1) programme -> . statement
-    (2) programme -> . statement EOL programme
+    (2) programme -> . statement ; programme
     (3) statement -> . assignation
     (4) statement -> . structure
     (5) statement -> . function
@@ -107,18 +107,18 @@ state 1
 state 2
 
     (1) programme -> statement .
-    (2) programme -> statement . EOL programme
+    (2) programme -> statement . ; programme
 
     $end            reduce using rule 1 (programme -> statement .)
     }               reduce using rule 1 (programme -> statement .)
-    EOL             shift and go to state 14
+    ;               shift and go to state 14
 
 
 state 3
 
     (3) statement -> assignation .
 
-    EOL             reduce using rule 3 (statement -> assignation .)
+    ;               reduce using rule 3 (statement -> assignation .)
     $end            reduce using rule 3 (statement -> assignation .)
     }               reduce using rule 3 (statement -> assignation .)
 
@@ -127,7 +127,7 @@ state 4
 
     (4) statement -> structure .
 
-    EOL             reduce using rule 4 (statement -> structure .)
+    ;               reduce using rule 4 (statement -> structure .)
     $end            reduce using rule 4 (statement -> structure .)
     }               reduce using rule 4 (statement -> structure .)
 
@@ -136,7 +136,7 @@ state 5
 
     (5) statement -> function .
 
-    EOL             reduce using rule 5 (statement -> function .)
+    ;               reduce using rule 5 (statement -> function .)
     $end            reduce using rule 5 (statement -> function .)
     }               reduce using rule 5 (statement -> function .)
 
@@ -155,16 +155,16 @@ state 7
     (6) structure -> WHILE . expression { programme }
     (13) expression -> . ( expression )
     (14) expression -> . NUMBER
-    (15) expression -> . IDENTIFIER
-    (16) expression -> . STRING
+    (15) expression -> . STRING
+    (16) expression -> . IDENTIFIER
     (17) expression -> . expression ADD_OP expression
     (18) expression -> . expression MUL_OP expression
     (19) expression -> . expression COMP_OP expression
 
     (               shift and go to state 18
     NUMBER          shift and go to state 19
-    IDENTIFIER      shift and go to state 20
-    STRING          shift and go to state 21
+    STRING          shift and go to state 20
+    IDENTIFIER      shift and go to state 21
 
     expression                     shift and go to state 17
 
@@ -180,16 +180,16 @@ state 9
     (8) structure -> IF . expression { programme }
     (13) expression -> . ( expression )
     (14) expression -> . NUMBER
-    (15) expression -> . IDENTIFIER
-    (16) expression -> . STRING
+    (15) expression -> . STRING
+    (16) expression -> . IDENTIFIER
     (17) expression -> . expression ADD_OP expression
     (18) expression -> . expression MUL_OP expression
     (19) expression -> . expression COMP_OP expression
 
     (               shift and go to state 18
     NUMBER          shift and go to state 19
-    IDENTIFIER      shift and go to state 20
-    STRING          shift and go to state 21
+    STRING          shift and go to state 20
+    IDENTIFIER      shift and go to state 21
 
     expression                     shift and go to state 23
 
@@ -223,9 +223,9 @@ state 13
 
 state 14
 
-    (2) programme -> statement EOL . programme
+    (2) programme -> statement ; . programme
     (1) programme -> . statement
-    (2) programme -> . statement EOL programme
+    (2) programme -> . statement ; programme
     (3) statement -> . assignation
     (4) statement -> . structure
     (5) statement -> . function
@@ -259,16 +259,16 @@ state 15
     (20) assignation -> IDENTIFIER = . expression
     (13) expression -> . ( expression )
     (14) expression -> . NUMBER
-    (15) expression -> . IDENTIFIER
-    (16) expression -> . STRING
+    (15) expression -> . STRING
+    (16) expression -> . IDENTIFIER
     (17) expression -> . expression ADD_OP expression
     (18) expression -> . expression MUL_OP expression
     (19) expression -> . expression COMP_OP expression
 
     (               shift and go to state 18
     NUMBER          shift and go to state 19
-    IDENTIFIER      shift and go to state 20
-    STRING          shift and go to state 21
+    STRING          shift and go to state 20
+    IDENTIFIER      shift and go to state 21
 
     expression                     shift and go to state 29
 
@@ -279,16 +279,16 @@ state 16
     (22) parameter -> . expression , parameter
     (13) expression -> . ( expression )
     (14) expression -> . NUMBER
-    (15) expression -> . IDENTIFIER
-    (16) expression -> . STRING
+    (15) expression -> . STRING
+    (16) expression -> . IDENTIFIER
     (17) expression -> . expression ADD_OP expression
     (18) expression -> . expression MUL_OP expression
     (19) expression -> . expression COMP_OP expression
 
     (               shift and go to state 18
     NUMBER          shift and go to state 19
-    IDENTIFIER      shift and go to state 20
-    STRING          shift and go to state 21
+    STRING          shift and go to state 20
+    IDENTIFIER      shift and go to state 21
 
     parameter                      shift and go to state 30
     expression                     shift and go to state 31
@@ -311,16 +311,16 @@ state 18
     (13) expression -> ( . expression )
     (13) expression -> . ( expression )
     (14) expression -> . NUMBER
-    (15) expression -> . IDENTIFIER
-    (16) expression -> . STRING
+    (15) expression -> . STRING
+    (16) expression -> . IDENTIFIER
     (17) expression -> . expression ADD_OP expression
     (18) expression -> . expression MUL_OP expression
     (19) expression -> . expression COMP_OP expression
 
     (               shift and go to state 18
     NUMBER          shift and go to state 19
-    IDENTIFIER      shift and go to state 20
-    STRING          shift and go to state 21
+    STRING          shift and go to state 20
+    IDENTIFIER      shift and go to state 21
 
     expression                     shift and go to state 36
 
@@ -332,7 +332,7 @@ state 19
     ADD_OP          reduce using rule 14 (expression -> NUMBER .)
     MUL_OP          reduce using rule 14 (expression -> NUMBER .)
     COMP_OP         reduce using rule 14 (expression -> NUMBER .)
-    EOL             reduce using rule 14 (expression -> NUMBER .)
+    ;               reduce using rule 14 (expression -> NUMBER .)
     $end            reduce using rule 14 (expression -> NUMBER .)
     }               reduce using rule 14 (expression -> NUMBER .)
     ,               reduce using rule 14 (expression -> NUMBER .)
@@ -341,32 +341,32 @@ state 19
 
 state 20
 
-    (15) expression -> IDENTIFIER .
+    (15) expression -> STRING .
 
-    {               reduce using rule 15 (expression -> IDENTIFIER .)
-    ADD_OP          reduce using rule 15 (expression -> IDENTIFIER .)
-    MUL_OP          reduce using rule 15 (expression -> IDENTIFIER .)
-    COMP_OP         reduce using rule 15 (expression -> IDENTIFIER .)
-    EOL             reduce using rule 15 (expression -> IDENTIFIER .)
-    $end            reduce using rule 15 (expression -> IDENTIFIER .)
-    }               reduce using rule 15 (expression -> IDENTIFIER .)
-    ,               reduce using rule 15 (expression -> IDENTIFIER .)
-    )               reduce using rule 15 (expression -> IDENTIFIER .)
+    {               reduce using rule 15 (expression -> STRING .)
+    ADD_OP          reduce using rule 15 (expression -> STRING .)
+    MUL_OP          reduce using rule 15 (expression -> STRING .)
+    COMP_OP         reduce using rule 15 (expression -> STRING .)
+    ;               reduce using rule 15 (expression -> STRING .)
+    $end            reduce using rule 15 (expression -> STRING .)
+    }               reduce using rule 15 (expression -> STRING .)
+    ,               reduce using rule 15 (expression -> STRING .)
+    )               reduce using rule 15 (expression -> STRING .)
 
 
 state 21
 
-    (16) expression -> STRING .
+    (16) expression -> IDENTIFIER .
 
-    {               reduce using rule 16 (expression -> STRING .)
-    ADD_OP          reduce using rule 16 (expression -> STRING .)
-    MUL_OP          reduce using rule 16 (expression -> STRING .)
-    COMP_OP         reduce using rule 16 (expression -> STRING .)
-    EOL             reduce using rule 16 (expression -> STRING .)
-    $end            reduce using rule 16 (expression -> STRING .)
-    }               reduce using rule 16 (expression -> STRING .)
-    ,               reduce using rule 16 (expression -> STRING .)
-    )               reduce using rule 16 (expression -> STRING .)
+    {               reduce using rule 16 (expression -> IDENTIFIER .)
+    ADD_OP          reduce using rule 16 (expression -> IDENTIFIER .)
+    MUL_OP          reduce using rule 16 (expression -> IDENTIFIER .)
+    COMP_OP         reduce using rule 16 (expression -> IDENTIFIER .)
+    ;               reduce using rule 16 (expression -> IDENTIFIER .)
+    $end            reduce using rule 16 (expression -> IDENTIFIER .)
+    }               reduce using rule 16 (expression -> IDENTIFIER .)
+    ,               reduce using rule 16 (expression -> IDENTIFIER .)
+    )               reduce using rule 16 (expression -> IDENTIFIER .)
 
 
 state 22
@@ -393,7 +393,7 @@ state 24
 
     (9) structure -> BULLETEDLIST { . programme }
     (1) programme -> . statement
-    (2) programme -> . statement EOL programme
+    (2) programme -> . statement ; programme
     (3) statement -> . assignation
     (4) statement -> . structure
     (5) statement -> . function
@@ -426,7 +426,7 @@ state 25
 
     (10) structure -> ARRAY { . programme }
     (1) programme -> . statement
-    (2) programme -> . statement EOL programme
+    (2) programme -> . statement ; programme
     (3) statement -> . assignation
     (4) statement -> . structure
     (5) statement -> . function
@@ -459,7 +459,7 @@ state 26
 
     (11) structure -> ARRAYHEADER { . programme }
     (1) programme -> . statement
-    (2) programme -> . statement EOL programme
+    (2) programme -> . statement ; programme
     (3) statement -> . assignation
     (4) statement -> . structure
     (5) statement -> . function
@@ -492,7 +492,7 @@ state 27
 
     (12) structure -> ARRAYROW { . programme }
     (1) programme -> . statement
-    (2) programme -> . statement EOL programme
+    (2) programme -> . statement ; programme
     (3) statement -> . assignation
     (4) statement -> . structure
     (5) statement -> . function
@@ -523,10 +523,10 @@ state 27
 
 state 28
 
-    (2) programme -> statement EOL programme .
+    (2) programme -> statement ; programme .
 
-    $end            reduce using rule 2 (programme -> statement EOL programme .)
-    }               reduce using rule 2 (programme -> statement EOL programme .)
+    $end            reduce using rule 2 (programme -> statement ; programme .)
+    }               reduce using rule 2 (programme -> statement ; programme .)
 
 
 state 29
@@ -536,7 +536,7 @@ state 29
     (18) expression -> expression . MUL_OP expression
     (19) expression -> expression . COMP_OP expression
 
-    EOL             reduce using rule 20 (assignation -> IDENTIFIER = expression .)
+    ;               reduce using rule 20 (assignation -> IDENTIFIER = expression .)
     $end            reduce using rule 20 (assignation -> IDENTIFIER = expression .)
     }               reduce using rule 20 (assignation -> IDENTIFIER = expression .)
     ADD_OP          shift and go to state 33
@@ -570,7 +570,7 @@ state 32
 
     (6) structure -> WHILE expression { . programme }
     (1) programme -> . statement
-    (2) programme -> . statement EOL programme
+    (2) programme -> . statement ; programme
     (3) statement -> . assignation
     (4) statement -> . structure
     (5) statement -> . function
@@ -604,16 +604,16 @@ state 33
     (17) expression -> expression ADD_OP . expression
     (13) expression -> . ( expression )
     (14) expression -> . NUMBER
-    (15) expression -> . IDENTIFIER
-    (16) expression -> . STRING
+    (15) expression -> . STRING
+    (16) expression -> . IDENTIFIER
     (17) expression -> . expression ADD_OP expression
     (18) expression -> . expression MUL_OP expression
     (19) expression -> . expression COMP_OP expression
 
     (               shift and go to state 18
     NUMBER          shift and go to state 19
-    IDENTIFIER      shift and go to state 20
-    STRING          shift and go to state 21
+    STRING          shift and go to state 20
+    IDENTIFIER      shift and go to state 21
 
     expression                     shift and go to state 46
 
@@ -622,16 +622,16 @@ state 34
     (18) expression -> expression MUL_OP . expression
     (13) expression -> . ( expression )
     (14) expression -> . NUMBER
-    (15) expression -> . IDENTIFIER
-    (16) expression -> . STRING
+    (15) expression -> . STRING
+    (16) expression -> . IDENTIFIER
     (17) expression -> . expression ADD_OP expression
     (18) expression -> . expression MUL_OP expression
     (19) expression -> . expression COMP_OP expression
 
     (               shift and go to state 18
     NUMBER          shift and go to state 19
-    IDENTIFIER      shift and go to state 20
-    STRING          shift and go to state 21
+    STRING          shift and go to state 20
+    IDENTIFIER      shift and go to state 21
 
     expression                     shift and go to state 47
 
@@ -640,16 +640,16 @@ state 35
     (19) expression -> expression COMP_OP . expression
     (13) expression -> . ( expression )
     (14) expression -> . NUMBER
-    (15) expression -> . IDENTIFIER
-    (16) expression -> . STRING
+    (15) expression -> . STRING
+    (16) expression -> . IDENTIFIER
     (17) expression -> . expression ADD_OP expression
     (18) expression -> . expression MUL_OP expression
     (19) expression -> . expression COMP_OP expression
 
     (               shift and go to state 18
     NUMBER          shift and go to state 19
-    IDENTIFIER      shift and go to state 20
-    STRING          shift and go to state 21
+    STRING          shift and go to state 20
+    IDENTIFIER      shift and go to state 21
 
     expression                     shift and go to state 48
 
@@ -677,7 +677,7 @@ state 38
 
     (8) structure -> IF expression { . programme }
     (1) programme -> . statement
-    (2) programme -> . statement EOL programme
+    (2) programme -> . statement ; programme
     (3) statement -> . assignation
     (4) statement -> . structure
     (5) statement -> . function
@@ -738,7 +738,7 @@ state 43
 
     (23) function -> IDENTIFIER ( parameter ) .
 
-    EOL             reduce using rule 23 (function -> IDENTIFIER ( parameter ) .)
+    ;               reduce using rule 23 (function -> IDENTIFIER ( parameter ) .)
     $end            reduce using rule 23 (function -> IDENTIFIER ( parameter ) .)
     }               reduce using rule 23 (function -> IDENTIFIER ( parameter ) .)
 
@@ -750,16 +750,16 @@ state 44
     (22) parameter -> . expression , parameter
     (13) expression -> . ( expression )
     (14) expression -> . NUMBER
-    (15) expression -> . IDENTIFIER
-    (16) expression -> . STRING
+    (15) expression -> . STRING
+    (16) expression -> . IDENTIFIER
     (17) expression -> . expression ADD_OP expression
     (18) expression -> . expression MUL_OP expression
     (19) expression -> . expression COMP_OP expression
 
     (               shift and go to state 18
     NUMBER          shift and go to state 19
-    IDENTIFIER      shift and go to state 20
-    STRING          shift and go to state 21
+    STRING          shift and go to state 20
+    IDENTIFIER      shift and go to state 21
 
     expression                     shift and go to state 31
     parameter                      shift and go to state 56
@@ -782,7 +782,7 @@ state 46
   ! shift/reduce conflict for MUL_OP resolved as shift
   ! shift/reduce conflict for COMP_OP resolved as shift
     {               reduce using rule 17 (expression -> expression ADD_OP expression .)
-    EOL             reduce using rule 17 (expression -> expression ADD_OP expression .)
+    ;               reduce using rule 17 (expression -> expression ADD_OP expression .)
     $end            reduce using rule 17 (expression -> expression ADD_OP expression .)
     }               reduce using rule 17 (expression -> expression ADD_OP expression .)
     ,               reduce using rule 17 (expression -> expression ADD_OP expression .)
@@ -807,7 +807,7 @@ state 47
   ! shift/reduce conflict for MUL_OP resolved as shift
   ! shift/reduce conflict for COMP_OP resolved as shift
     {               reduce using rule 18 (expression -> expression MUL_OP expression .)
-    EOL             reduce using rule 18 (expression -> expression MUL_OP expression .)
+    ;               reduce using rule 18 (expression -> expression MUL_OP expression .)
     $end            reduce using rule 18 (expression -> expression MUL_OP expression .)
     }               reduce using rule 18 (expression -> expression MUL_OP expression .)
     ,               reduce using rule 18 (expression -> expression MUL_OP expression .)
@@ -832,7 +832,7 @@ state 48
   ! shift/reduce conflict for MUL_OP resolved as shift
   ! shift/reduce conflict for COMP_OP resolved as shift
     {               reduce using rule 19 (expression -> expression COMP_OP expression .)
-    EOL             reduce using rule 19 (expression -> expression COMP_OP expression .)
+    ;               reduce using rule 19 (expression -> expression COMP_OP expression .)
     $end            reduce using rule 19 (expression -> expression COMP_OP expression .)
     }               reduce using rule 19 (expression -> expression COMP_OP expression .)
     ,               reduce using rule 19 (expression -> expression COMP_OP expression .)
@@ -854,7 +854,7 @@ state 49
     ADD_OP          reduce using rule 13 (expression -> ( expression ) .)
     MUL_OP          reduce using rule 13 (expression -> ( expression ) .)
     COMP_OP         reduce using rule 13 (expression -> ( expression ) .)
-    EOL             reduce using rule 13 (expression -> ( expression ) .)
+    ;               reduce using rule 13 (expression -> ( expression ) .)
     $end            reduce using rule 13 (expression -> ( expression ) .)
     }               reduce using rule 13 (expression -> ( expression ) .)
     ,               reduce using rule 13 (expression -> ( expression ) .)
@@ -879,7 +879,7 @@ state 52
 
     (9) structure -> BULLETEDLIST { programme } .
 
-    EOL             reduce using rule 9 (structure -> BULLETEDLIST { programme } .)
+    ;               reduce using rule 9 (structure -> BULLETEDLIST { programme } .)
     $end            reduce using rule 9 (structure -> BULLETEDLIST { programme } .)
     }               reduce using rule 9 (structure -> BULLETEDLIST { programme } .)
 
@@ -888,7 +888,7 @@ state 53
 
     (10) structure -> ARRAY { programme } .
 
-    EOL             reduce using rule 10 (structure -> ARRAY { programme } .)
+    ;               reduce using rule 10 (structure -> ARRAY { programme } .)
     $end            reduce using rule 10 (structure -> ARRAY { programme } .)
     }               reduce using rule 10 (structure -> ARRAY { programme } .)
 
@@ -897,7 +897,7 @@ state 54
 
     (11) structure -> ARRAYHEADER { programme } .
 
-    EOL             reduce using rule 11 (structure -> ARRAYHEADER { programme } .)
+    ;               reduce using rule 11 (structure -> ARRAYHEADER { programme } .)
     $end            reduce using rule 11 (structure -> ARRAYHEADER { programme } .)
     }               reduce using rule 11 (structure -> ARRAYHEADER { programme } .)
 
@@ -906,7 +906,7 @@ state 55
 
     (12) structure -> ARRAYROW { programme } .
 
-    EOL             reduce using rule 12 (structure -> ARRAYROW { programme } .)
+    ;               reduce using rule 12 (structure -> ARRAYROW { programme } .)
     $end            reduce using rule 12 (structure -> ARRAYROW { programme } .)
     }               reduce using rule 12 (structure -> ARRAYROW { programme } .)
 
@@ -922,7 +922,7 @@ state 57
 
     (6) structure -> WHILE expression { programme } .
 
-    EOL             reduce using rule 6 (structure -> WHILE expression { programme } .)
+    ;               reduce using rule 6 (structure -> WHILE expression { programme } .)
     $end            reduce using rule 6 (structure -> WHILE expression { programme } .)
     }               reduce using rule 6 (structure -> WHILE expression { programme } .)
 
@@ -938,7 +938,7 @@ state 59
 
     (8) structure -> IF expression { programme } .
 
-    EOL             reduce using rule 8 (structure -> IF expression { programme } .)
+    ;               reduce using rule 8 (structure -> IF expression { programme } .)
     $end            reduce using rule 8 (structure -> IF expression { programme } .)
     }               reduce using rule 8 (structure -> IF expression { programme } .)
 
@@ -954,7 +954,7 @@ state 61
 
     (7) structure -> FOR IDENTIFIER FROM NUMBER TO NUMBER { . programme }
     (1) programme -> . statement
-    (2) programme -> . statement EOL programme
+    (2) programme -> . statement ; programme
     (3) statement -> . assignation
     (4) statement -> . structure
     (5) statement -> . function
@@ -994,7 +994,7 @@ state 63
 
     (7) structure -> FOR IDENTIFIER FROM NUMBER TO NUMBER { programme } .
 
-    EOL             reduce using rule 7 (structure -> FOR IDENTIFIER FROM NUMBER TO NUMBER { programme } .)
+    ;               reduce using rule 7 (structure -> FOR IDENTIFIER FROM NUMBER TO NUMBER { programme } .)
     $end            reduce using rule 7 (structure -> FOR IDENTIFIER FROM NUMBER TO NUMBER { programme } .)
     }               reduce using rule 7 (structure -> FOR IDENTIFIER FROM NUMBER TO NUMBER { programme } .)
 

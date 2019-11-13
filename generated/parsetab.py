@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = "ADD_OP ARRAY ARRAYHEADER ARRAYROW BULLETEDLIST COMP_OP EOL FOR FROM IDENTIFIER IF MUL_OP NUMBER STRING TO WHILE programme : statement \n        | statement EOL programme  statement : assignation \n        | structure \n        | function  structure : WHILE expression '{' programme '}'  structure : FOR IDENTIFIER FROM NUMBER TO NUMBER '{' programme '}'  structure : IF expression '{' programme '}'  structure : BULLETEDLIST '{' programme '}'  structure : ARRAY '{' programme '}'  structure : ARRAYHEADER '{' programme '}'  structure : ARRAYROW '{' programme '}'  expression : '(' expression ')'  expression :  NUMBER \n        | IDENTIFIER \n        | STRING  expression : expression ADD_OP expression \n        | expression MUL_OP expression \n        | expression COMP_OP expression  assignation : IDENTIFIER '=' expression  parameter : expression \n        | expression ',' parameter  function : IDENTIFIER '(' parameter ')' "
+_lr_signature = "ADD_OP ARRAY ARRAYHEADER ARRAYROW BULLETEDLIST COMP_OP FOR FROM IDENTIFIER IF MUL_OP NUMBER STRING TO WHILE programme : statement programme : statement ';' programme  statement : assignation \n        | structure \n        | function  structure : WHILE expression '{' programme '}'  structure : FOR IDENTIFIER FROM NUMBER TO NUMBER '{' programme '}'  structure : IF expression '{' programme '}'  structure : BULLETEDLIST '{' programme '}'  structure : ARRAY '{' programme '}'  structure : ARRAYHEADER '{' programme '}'  structure : ARRAYROW '{' programme '}'  expression : '(' expression ')'  expression :  NUMBER \n        | STRING\n        | IDENTIFIER  expression : expression ADD_OP expression \n        | expression MUL_OP expression \n        | expression COMP_OP expression  assignation : IDENTIFIER '=' expression  parameter : expression \n        | expression ',' parameter  function : IDENTIFIER '(' parameter ')' "
     
-_lr_action_items = {'IDENTIFIER':([0,7,8,9,14,15,16,18,24,25,26,27,32,33,34,35,38,44,61,],[6,20,22,20,6,20,20,20,6,6,6,6,6,20,20,20,6,20,6,]),'WHILE':([0,14,24,25,26,27,32,38,61,],[7,7,7,7,7,7,7,7,7,]),'FOR':([0,14,24,25,26,27,32,38,61,],[8,8,8,8,8,8,8,8,8,]),'IF':([0,14,24,25,26,27,32,38,61,],[9,9,9,9,9,9,9,9,9,]),'BULLETEDLIST':([0,14,24,25,26,27,32,38,61,],[10,10,10,10,10,10,10,10,10,]),'ARRAY':([0,14,24,25,26,27,32,38,61,],[11,11,11,11,11,11,11,11,11,]),'ARRAYHEADER':([0,14,24,25,26,27,32,38,61,],[12,12,12,12,12,12,12,12,12,]),'ARRAYROW':([0,14,24,25,26,27,32,38,61,],[13,13,13,13,13,13,13,13,13,]),'$end':([1,2,3,4,5,19,20,21,28,29,43,46,47,48,49,52,53,54,55,57,59,63,],[0,-1,-3,-4,-5,-14,-15,-16,-2,-20,-23,-17,-18,-19,-13,-9,-10,-11,-12,-6,-8,-7,]),'}':([2,3,4,5,19,20,21,28,29,39,40,41,42,43,45,46,47,48,49,51,52,53,54,55,57,59,62,63,],[-1,-3,-4,-5,-14,-15,-16,-2,-20,52,53,54,55,-23,57,-17,-18,-19,-13,59,-9,-10,-11,-12,-6,-8,63,-7,]),'EOL':([2,3,4,5,19,20,21,29,43,46,47,48,49,52,53,54,55,57,59,63,],[14,-3,-4,-5,-14,-15,-16,-20,-23,-17,-18,-19,-13,-9,-10,-11,-12,-6,-8,-7,]),'=':([6,],[15,]),'(':([6,7,9,15,16,18,33,34,35,44,],[16,18,18,18,18,18,18,18,18,18,]),'NUMBER':([7,9,15,16,18,33,34,35,37,44,58,],[19,19,19,19,19,19,19,19,50,19,60,]),'STRING':([7,9,15,16,18,33,34,35,44,],[21,21,21,21,21,21,21,21,21,]),'{':([10,11,12,13,17,19,20,21,23,46,47,48,49,60,],[24,25,26,27,32,-14,-15,-16,38,-17,-18,-19,-13,61,]),'ADD_OP':([17,19,20,21,23,29,31,36,46,47,48,49,],[33,-14,-15,-16,33,33,33,33,33,33,33,-13,]),'MUL_OP':([17,19,20,21,23,29,31,36,46,47,48,49,],[34,-14,-15,-16,34,34,34,34,34,34,34,-13,]),'COMP_OP':([17,19,20,21,23,29,31,36,46,47,48,49,],[35,-14,-15,-16,35,35,35,35,35,35,35,-13,]),',':([19,20,21,31,46,47,48,49,],[-14,-15,-16,44,-17,-18,-19,-13,]),')':([19,20,21,30,31,36,46,47,48,49,56,],[-14,-15,-16,43,-21,49,-17,-18,-19,-13,-22,]),'FROM':([22,],[37,]),'TO':([50,],[58,]),}
+_lr_action_items = {'IDENTIFIER':([0,7,8,9,14,15,16,18,24,25,26,27,32,33,34,35,38,44,61,],[6,21,22,21,6,21,21,21,6,6,6,6,6,21,21,21,6,21,6,]),'WHILE':([0,14,24,25,26,27,32,38,61,],[7,7,7,7,7,7,7,7,7,]),'FOR':([0,14,24,25,26,27,32,38,61,],[8,8,8,8,8,8,8,8,8,]),'IF':([0,14,24,25,26,27,32,38,61,],[9,9,9,9,9,9,9,9,9,]),'BULLETEDLIST':([0,14,24,25,26,27,32,38,61,],[10,10,10,10,10,10,10,10,10,]),'ARRAY':([0,14,24,25,26,27,32,38,61,],[11,11,11,11,11,11,11,11,11,]),'ARRAYHEADER':([0,14,24,25,26,27,32,38,61,],[12,12,12,12,12,12,12,12,12,]),'ARRAYROW':([0,14,24,25,26,27,32,38,61,],[13,13,13,13,13,13,13,13,13,]),'$end':([1,2,3,4,5,19,20,21,28,29,43,46,47,48,49,52,53,54,55,57,59,63,],[0,-1,-3,-4,-5,-14,-15,-16,-2,-20,-23,-17,-18,-19,-13,-9,-10,-11,-12,-6,-8,-7,]),'}':([2,3,4,5,19,20,21,28,29,39,40,41,42,43,45,46,47,48,49,51,52,53,54,55,57,59,62,63,],[-1,-3,-4,-5,-14,-15,-16,-2,-20,52,53,54,55,-23,57,-17,-18,-19,-13,59,-9,-10,-11,-12,-6,-8,63,-7,]),';':([2,3,4,5,19,20,21,29,43,46,47,48,49,52,53,54,55,57,59,63,],[14,-3,-4,-5,-14,-15,-16,-20,-23,-17,-18,-19,-13,-9,-10,-11,-12,-6,-8,-7,]),'=':([6,],[15,]),'(':([6,7,9,15,16,18,33,34,35,44,],[16,18,18,18,18,18,18,18,18,18,]),'NUMBER':([7,9,15,16,18,33,34,35,37,44,58,],[19,19,19,19,19,19,19,19,50,19,60,]),'STRING':([7,9,15,16,18,33,34,35,44,],[20,20,20,20,20,20,20,20,20,]),'{':([10,11,12,13,17,19,20,21,23,46,47,48,49,60,],[24,25,26,27,32,-14,-15,-16,38,-17,-18,-19,-13,61,]),'ADD_OP':([17,19,20,21,23,29,31,36,46,47,48,49,],[33,-14,-15,-16,33,33,33,33,33,33,33,-13,]),'MUL_OP':([17,19,20,21,23,29,31,36,46,47,48,49,],[34,-14,-15,-16,34,34,34,34,34,34,34,-13,]),'COMP_OP':([17,19,20,21,23,29,31,36,46,47,48,49,],[35,-14,-15,-16,35,35,35,35,35,35,35,-13,]),',':([19,20,21,31,46,47,48,49,],[-14,-15,-16,44,-17,-18,-19,-13,]),')':([19,20,21,30,31,36,46,47,48,49,56,],[-14,-15,-16,43,-21,49,-17,-18,-19,-13,-22,]),'FROM':([22,],[37,]),'TO':([50,],[58,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -27,27 +27,27 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> programme","S'",1,None,None,None),
-  ('programme -> statement','programme',1,'p_programme','parser.py',7),
-  ('programme -> statement EOL programme','programme',3,'p_programme','parser.py',8),
+  ('programme -> statement','programme',1,'p_programme_statement','parser.py',7),
+  ('programme -> statement ; programme','programme',3,'p_programme_recursive','parser.py',11),
   ('statement -> assignation','statement',1,'p_statement','parser.py',15),
   ('statement -> structure','statement',1,'p_statement','parser.py',16),
   ('statement -> function','statement',1,'p_statement','parser.py',17),
-  ('structure -> WHILE expression { programme }','structure',5,'p_structure_while','parser.py',20),
-  ('structure -> FOR IDENTIFIER FROM NUMBER TO NUMBER { programme }','structure',9,'p_structure_for','parser.py',23),
-  ('structure -> IF expression { programme }','structure',5,'p_structure_if','parser.py',26),
-  ('structure -> BULLETEDLIST { programme }','structure',4,'p_structure_bulleted_list','parser.py',29),
-  ('structure -> ARRAY { programme }','structure',4,'p_structure_array','parser.py',32),
-  ('structure -> ARRAYHEADER { programme }','structure',4,'p_structure_array_header','parser.py',35),
-  ('structure -> ARRAYROW { programme }','structure',4,'p_structure_array_row','parser.py',38),
-  ('expression -> ( expression )','expression',3,'p_expression_paren','parser.py',41),
-  ('expression -> NUMBER','expression',1,'p_expression','parser.py',44),
-  ('expression -> IDENTIFIER','expression',1,'p_expression','parser.py',45),
-  ('expression -> STRING','expression',1,'p_expression','parser.py',46),
-  ('expression -> expression ADD_OP expression','expression',3,'p_expression_op','parser.py',49),
-  ('expression -> expression MUL_OP expression','expression',3,'p_expression_op','parser.py',50),
-  ('expression -> expression COMP_OP expression','expression',3,'p_expression_op','parser.py',51),
-  ('assignation -> IDENTIFIER = expression','assignation',3,'p_assign','parser.py',54),
-  ('parameter -> expression','parameter',1,'p_parameter','parser.py',57),
-  ('parameter -> expression , parameter','parameter',3,'p_parameter','parser.py',58),
-  ('function -> IDENTIFIER ( parameter )','function',4,'p_function','parser.py',61),
+  ('structure -> WHILE expression { programme }','structure',5,'p_structure_while','parser.py',21),
+  ('structure -> FOR IDENTIFIER FROM NUMBER TO NUMBER { programme }','structure',9,'p_structure_for','parser.py',25),
+  ('structure -> IF expression { programme }','structure',5,'p_structure_if','parser.py',32),
+  ('structure -> BULLETEDLIST { programme }','structure',4,'p_structure_bulleted_list','parser.py',35),
+  ('structure -> ARRAY { programme }','structure',4,'p_structure_array','parser.py',38),
+  ('structure -> ARRAYHEADER { programme }','structure',4,'p_structure_array_header','parser.py',41),
+  ('structure -> ARRAYROW { programme }','structure',4,'p_structure_array_row','parser.py',44),
+  ('expression -> ( expression )','expression',3,'p_expression_paren','parser.py',47),
+  ('expression -> NUMBER','expression',1,'p_expression','parser.py',50),
+  ('expression -> STRING','expression',1,'p_expression','parser.py',51),
+  ('expression -> IDENTIFIER','expression',1,'p_expression','parser.py',52),
+  ('expression -> expression ADD_OP expression','expression',3,'p_expression_op','parser.py',56),
+  ('expression -> expression MUL_OP expression','expression',3,'p_expression_op','parser.py',57),
+  ('expression -> expression COMP_OP expression','expression',3,'p_expression_op','parser.py',58),
+  ('assignation -> IDENTIFIER = expression','assignation',3,'p_assign','parser.py',61),
+  ('parameter -> expression','parameter',1,'p_parameter','parser.py',65),
+  ('parameter -> expression , parameter','parameter',3,'p_parameter','parser.py',66),
+  ('function -> IDENTIFIER ( parameter )','function',4,'p_function','parser.py',69),
 ]

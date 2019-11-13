@@ -3,24 +3,30 @@ import ply.yacc as yacc
 from lex import tokens
 import AST
 
-def p_programme(p):
-    ''' programme : statement 
-        | statement EOL programme '''
-    if(len(p) == 2):
-        p[0] = AST.ProgramNode(p[1])
-    else:
-        p[0] = AST.ProgramNode([p[1]]+p[3].children)
+def p_programme_statement(p):
+    ''' programme : statement'''
+    p[0] = AST.ProgramNode(p[1])
+
+def p_programme_recursive(p):
+    ''' programme : statement ';' programme '''
+    p[0] = AST.ProgramNode([p[1]]+p[3].children)
 
 def p_statement(p):
     ''' statement : assignation 
         | structure 
         | function '''
+    p[0] = p[1]
 
 def p_structure_while(p):
     ''' structure : WHILE expression '{' programme '}' '''
+    p[0] = AST.WhileNode([p[2],p[4]])
 
 def p_structure_for(p):
     ''' structure : FOR IDENTIFIER FROM NUMBER TO NUMBER '{' programme '}' '''
+    a = AST.AssignNode([p[2], p[4]])
+    b = AST.OpNode('<', [p[2], p[6]])
+
+    p[0] = AST.ForNode([a, b, p[8]])
 
 def p_structure_if(p):
     ''' structure : IF expression '{' programme '}' '''
@@ -42,8 +48,9 @@ def p_expression_paren(p):
 
 def p_expression(p):
     ''' expression :  NUMBER 
-        | IDENTIFIER 
-        | STRING '''
+        | STRING
+        | IDENTIFIER '''
+    p[0] = AST.TokenNode(p[1])
 
 def p_expression_op(p):
     ''' expression : expression ADD_OP expression 
@@ -52,6 +59,7 @@ def p_expression_op(p):
 
 def p_assign(p):
     ''' assignation : IDENTIFIER '=' expression '''
+    p[0] = AST.AssignNode([AST.TokenNode(p[1]),p[3]])
 
 def p_parameter(p):
     ''' parameter : expression 
