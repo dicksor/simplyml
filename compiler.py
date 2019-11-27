@@ -9,8 +9,8 @@ functions = {
 }
 
 operator = {
-    '<' : lambda x, y: int(x) < int(y),
-    '+' : lambda x, y: int(x) + int(y) 
+    '<' : lambda x, y: x < y,
+    '+' : lambda x, y: x + y 
 }
 
 variables = {}
