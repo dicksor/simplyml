@@ -73,7 +73,7 @@ class Node:
             for i,c in enumerate(self.next):
                 if not c: return
                 col = (col + 1) % len(colors)
-                col=0 # FRT pour tout afficher en rouge
+                #col=0 # FRT pour tout afficher en rouge
                 color = colors[col]                
                 c.threadTree(graph, seen, col)
                 edge = pydot.Edge(self.ID,c.ID)
