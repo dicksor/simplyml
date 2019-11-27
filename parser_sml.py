@@ -57,10 +57,13 @@ def p_expression_paren(p):
     p[0] = p[2]
 
 def p_expression(p):
-    ''' expression :  NUMBER 
-        | STRING
-        | IDENTIFIER '''
+    ''' expression : NUMBER 
+        | STRING '''
     p[0] = AST.TokenNode(p[1])
+
+def p_expression_identifier(p):
+    "expression : IDENTIFIER"
+    p[0] = AST.IdentifierNode(p[1])
 
 def p_expression_op(p):
     ''' expression : expression ADD_OP expression 
