@@ -7,7 +7,7 @@ while (i - 10) {
     i = i - 1
 };
 
-bulletedlist {
+bulletedList {
     for i from 0 to 5 {
         addListRow(i)
     }

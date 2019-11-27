@@ -3,7 +3,9 @@ from AST import addToClass
 from functools import reduce
 
 functions = {
-    'title' : lambda content: "<h1>" + content + "</h1>"
+    'title' : lambda content: "<h1>" + content + "</h1>",
+    'subTitle' : lambda content: "<h3>" + content + "</h3>",
+    'paragraph' : lambda content: "<p>" + content + "</p>"
 }
 
 variables = {}
@@ -34,6 +36,7 @@ def compile(self):
     childValue = self.children[1].compile()
     variables[childName] = childValue
     return ""
+
     
 
 

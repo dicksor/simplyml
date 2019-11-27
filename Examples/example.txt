@@ -1,3 +1,6 @@
-monTitre = "Exemple";
+monTitre = "Exemple Via Var";
 title(monTitre);
-title("monTitre")
+title("monTitre");
+subTitle("Mon sous-titre");
+paragraph(monTitre);
+paragraph("monTitre")
