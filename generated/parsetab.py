@@ -46,8 +46,8 @@ _lr_productions = [
   ('expression -> expression ADD_OP expression','expression',3,'p_expression_op','parser.py',65),
   ('expression -> expression MUL_OP expression','expression',3,'p_expression_op','parser.py',66),
   ('expression -> expression COMP_OP expression','expression',3,'p_expression_op','parser.py',67),
-  ('assignation -> IDENTIFIER = expression','assignation',3,'p_assign','parser.py',70),
-  ('parameter -> expression','parameter',1,'p_parameter','parser.py',74),
-  ('parameter -> expression , parameter','parameter',3,'p_parameter','parser.py',75),
-  ('function -> IDENTIFIER ( parameter )','function',4,'p_function','parser.py',82),
+  ('assignation -> IDENTIFIER = expression','assignation',3,'p_assign','parser.py',71),
+  ('parameter -> expression','parameter',1,'p_parameter','parser.py',75),
+  ('parameter -> expression , parameter','parameter',3,'p_parameter','parser.py',76),
+  ('function -> IDENTIFIER ( parameter )','function',4,'p_function','parser.py',83),
 ]

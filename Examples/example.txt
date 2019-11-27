@@ -2,10 +2,13 @@ monTitre = "Exemple";
 title(monTitre);
 subTitle("Mon sous-titre");
 
-BulletedList
-{
-for i from 0 to 5
-{
-addListRow(i)
+i = 3;
+while (i - 10) {
+    i = i - 1
 };
-};
+
+bulletedlist {
+    for i from 0 to 5 {
+        addListRow(i)
+    }
+}
