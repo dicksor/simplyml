@@ -27,6 +27,7 @@ def p_structure_for(p):
     fromNumber = AST.TokenNode(p[4])
     toNumber = AST.TokenNode(p[6])
     a = AST.AssignNode([var, fromNumber])
+    var = AST.TokenNode(p[2])
     b = AST.OpNode('<', [var, toNumber])
 
     p[0] = AST.ForNode([a, b, p[8]])
