@@ -8,6 +8,11 @@ functions = {
     'paragraph' : lambda content: "<p>" + content + "</p>"
 }
 
+operator = {
+    '<' : lambda x, y: int(x) < int(y),
+    '+' : lambda x, y: int(x) + int(y) 
+}
+
 variables = {}
 
 @addToClass(AST.ProgramNode)
@@ -38,7 +43,25 @@ def compile(self):
     variables[childName] = childValue
     return ""
 
-    
+@addToClass(AST.OpNode)
+def compile(self):
+    x = self.children[0].compile()
+    y = self.children[1].compile()
+    result = operator[self.op](x, y)
+    print("%s %s %s = %s" % (x, self.op, y, result))
+    return result
+
+@addToClass(AST.WhileNode)
+def compile(self):
+    cond = self.children[0]
+    body = self.children[1]
+    bytecode = ""
+
+    while cond.compile():
+        bytecode += body.compile()
+
+    return bytecode
+
 
 
 if __name__ == "__main__":

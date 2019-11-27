@@ -3,4 +3,11 @@ title(monTitre);
 title("monTitre");
 subTitle("Mon sous-titre");
 paragraph(monTitre);
-paragraph("monTitre")
+paragraph("monTitre");
+
+i = 0;
+
+while (i < 5) {
+    title(i);
+    i = i + 1
+}
