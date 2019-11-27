@@ -102,7 +102,7 @@ class TokenNode(Node):
         self.tok = tok
         
     def __repr__(self):
-        return repr(self.tok)
+        return 'token\n' + repr(self.tok)
 
 class IdentifierNode(Node):
     type = "identifier"
@@ -111,7 +111,7 @@ class IdentifierNode(Node):
         self.tok = tok
 
     def __repr__(self):
-        return repr(self.tok)
+        return 'identifier\n' + repr(self.tok)
     
 class OpNode(Node):
     def __init__(self, op, children):
