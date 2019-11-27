@@ -132,6 +132,36 @@ class EntryNode(Node):
 
 class ForNode(Node):
     type = 'for'
+
+class IfNode(Node):
+    type = 'if'
+
+class BulletedListNode(Node):
+    type = 'bulleted list'
+
+class ArrayNode(Node):
+    type = 'array'
+
+class ArrayHeaderNode(Node):
+    type = 'array header'
+
+class ArrayRowNode(Node):
+    type = 'array row'
+
+class FunctionNode(Node):
+    def __init__(self, name, children):
+        Node.__init__(self, children)
+
+        self.name = name
+
+        try:
+            self.nbargs = len(children)
+        except AttributeError:
+            self.nbargs = 1
+        
+    def __repr__(self):
+        return "%s (%s)" % (self.name, self.nbargs)
+
     
 def addToClass(cls):
     ''' D�corateur permettant d'ajouter la fonction d�cor�e en tant que m�thode
