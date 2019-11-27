@@ -23,14 +23,15 @@ def compile(self):
 
 @addToClass(AST.TokenNode)
 def compile(self):
-    if self.tok in variables:
-        return variables[self.tok]
-    else:
-        return self.tok
+    return self.tok
+
+@addToClass(AST.IdentifierNode)
+def compile(self):
+    return variables[self.tok]
 
 @addToClass(AST.AssignNode)
 def compile(self):
-    childName = self.children[0].compile()
+    childName = self.children[0].tok
     childValue = self.children[1].compile()
     variables[childName] = childValue
     return ""
