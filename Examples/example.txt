@@ -1,13 +1,17 @@
-monTitre = "Exemple Via Var";
-title(monTitre);
-title("monTitre");
-subTitle("Mon sous-titre");
-paragraph(monTitre);
-paragraph("monTitre");
-
-i = 0;
-
-while (i < 5) {
-    title(i);
-    i = i + 1
+array {
+    arrayrow {
+        addArrayHeader("Prénom");
+        addArrayHeader("Nom");
+        addArrayHeader("Age")
+    };
+    arrayrow {
+        addArrayElement("Yohann");
+        addArrayElement("Loison");
+        addArrayElement("21")
+    };
+    arrayrow {
+        addArrayElement("Vincent");
+        addArrayElement("Moulin");
+        addArrayElement("21")
+    }
 }

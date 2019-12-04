@@ -6,7 +6,6 @@ reserved_words = {
     'to',
     'while',
     'array',
-    'arrayheader',
     'arrayrow',
     'bulletedlist',
     'if'
@@ -44,11 +43,11 @@ def t_ADD_OP(t):
     return t
 
 def t_MUL_OP(t):
-    r'[*/]'
+    r'[*/%]'
     return t
 
 def t_COMP_OP(t):
-    r'(==|!=|<|>)'
+    r'(==|!=|<=|>=|<|>)'
     return t
 
 def t_EOL(t):

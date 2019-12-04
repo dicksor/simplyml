@@ -3,6 +3,12 @@ import ply.yacc as yacc
 from lex import tokens
 import AST
 
+precedence = (
+    ('left', 'COMP_OP'),
+    ('left', 'ADD_OP'),
+    ('left', 'MUL_OP'),  
+)
+
 def p_programme_statement(p):
     ''' programme : statement'''
     p[0] = AST.ProgramNode(p[1])
@@ -23,14 +29,20 @@ def p_structure_while(p):
 
 def p_structure_for(p):
     ''' structure : FOR IDENTIFIER FROM NUMBER TO NUMBER '{' programme '}' '''
-    var = AST.TokenNode(p[2])
+    variable = AST.IdentifierNode(p[2])
     fromNumber = AST.TokenNode(p[4])
     toNumber = AST.TokenNode(p[6])
-    a = AST.AssignNode([var, fromNumber])
-    var = AST.TokenNode(p[2])
-    b = AST.OpNode('<', [var, toNumber])
+    assign = AST.AssignNode([variable, fromNumber])
 
-    p[0] = AST.ForNode([a, b, p[8]])
+    variable = AST.IdentifierNode(p[2])
+    condition = AST.OpNode('<', [variable, toNumber])
+
+    variable = AST.IdentifierNode(p[2])
+    increment = AST.OpNode('+', [variable, AST.TokenNode(1)])
+    variable = AST.IdentifierNode(p[2])
+    increment = AST.AssignNode([variable, increment])
+
+    p[0] = AST.ForNode([assign, condition, increment, p[8]])
 
 def p_structure_if(p):
     ''' structure : IF expression '{' programme '}' '''
@@ -43,10 +55,6 @@ def p_structure_bulleted_list(p):
 def p_structure_array(p):
     ''' structure : ARRAY '{' programme '}' '''
     p[0] = AST.ArrayNode(p[3])
-
-def p_structure_array_header(p):
-    ''' structure : ARRAYHEADER '{' programme '}' '''
-    p[0] = AST.ArrayHeaderNode(p[3])
 
 def p_structure_array_row(p):
     ''' structure : ARRAYROW '{' programme '}' '''

@@ -151,9 +151,6 @@ class BulletedListNode(Node):
 class ArrayNode(Node):
     type = 'array'
 
-class ArrayHeaderNode(Node):
-    type = 'array header'
-
 class ArrayRowNode(Node):
     type = 'array row'
 

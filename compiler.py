@@ -5,12 +5,24 @@ from functools import reduce
 functions = {
     'title' : lambda content: "<h1>" + str(content) + "</h1>",
     'subTitle' : lambda content: "<h3>" + str(content) + "</h3>",
-    'paragraph' : lambda content: "<p>" + str(content) + "</p>"
+    'paragraph' : lambda content: "<p>" + str(content) + "</p>",
+    'addListRow' : lambda content : "<li>" + str(content) + "</li>",
+    'addArrayHeader' : lambda content : "<th>" + str(content) + "</th>",
+    'addArrayElement' : lambda content : "<td>" + str(content) + "</td>"
 }
 
 operator = {
     '<' : lambda x, y: x < y,
-    '+' : lambda x, y: x + y 
+    '>' : lambda x, y: x > y,
+    '<=' : lambda x, y: x <= y,
+    '>=' : lambda x, y: x >= y,
+    '+' : lambda x, y: x + y,
+    '-' : lambda x, y: x - y,
+    '*' : lambda x, y: x * y,
+    '/' : lambda x, y: x / y,
+    '==' : lambda x, y: x == y,
+    '!=' : lambda x, y: x != y,
+    '%' : lambda x, y: int(x) % int(y)
 }
 
 variables = {}
@@ -47,7 +59,9 @@ def compile(self):
 def compile(self):
     x = self.children[0].compile()
     y = self.children[1].compile()
+
     result = operator[self.op](x, y)
+    #print("%s %s %s = %s" % (x, self.op, y, result))
     return result
 
 @addToClass(AST.WhileNode)
@@ -61,7 +75,47 @@ def compile(self):
 
     return bytecode
 
+@addToClass(AST.ForNode)
+def compile(self):
+    bytecode = ""
 
+    init = self.children[0]
+    cond = self.children[1]
+    incr = self.children[2]
+    body = self.children[3]
+
+    init.compile()
+    while cond.compile():
+        bytecode += body.compile()
+        incr.compile()
+
+    return bytecode
+
+@addToClass(AST.BulletedListNode)
+def compile(self):
+    bytecode = "<ul>"
+    bytecode += self.children[0].compile()
+    return bytecode + "</ul>"
+
+@addToClass(AST.ArrayNode)
+def compile(self):
+    return "<table>" + self.children[0].compile() + "</table>"
+
+@addToClass(AST.ArrayRowNode)
+def compile(self):
+    return "<tr>" + self.children[0].compile() + "</tr>"
+
+
+@addToClass(AST.IfNode)
+def compile(self):
+    cond = self.children[0]
+    body = self.children[1]
+
+    bytecode = ""
+    if cond.compile():
+        bytecode += body.compile()
+
+    return bytecode
 
 if __name__ == "__main__":
     from parser_sml import parse
