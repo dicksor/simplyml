@@ -25,6 +25,7 @@ literals = '()"}{,[]=;'
 
 def t_NUMBER(t):
     r'\d+(\.\d*)?'
+    t.value = float(t.value)
     return t
 
 def t_STRING(t):
@@ -47,7 +48,7 @@ def t_MUL_OP(t):
     return t
 
 def t_COMP_OP(t):
-    r'(==|!=)'
+    r'(==|!=|<|>)'
     return t
 
 def t_EOL(t):

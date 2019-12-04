@@ -3,9 +3,9 @@ from AST import addToClass
 from functools import reduce
 
 functions = {
-    'title' : lambda content: "<h1>" + content + "</h1>",
-    'subTitle' : lambda content: "<h3>" + content + "</h3>",
-    'paragraph' : lambda content: "<p>" + content + "</p>"
+    'title' : lambda content: "<h1>" + str(content) + "</h1>",
+    'subTitle' : lambda content: "<h3>" + str(content) + "</h3>",
+    'paragraph' : lambda content: "<p>" + str(content) + "</p>"
 }
 
 operator = {
@@ -48,7 +48,6 @@ def compile(self):
     x = self.children[0].compile()
     y = self.children[1].compile()
     result = operator[self.op](x, y)
-    print("%s %s %s = %s" % (x, self.op, y, result))
     return result
 
 @addToClass(AST.WhileNode)
