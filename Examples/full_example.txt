@@ -1,8 +1,15 @@
 monTitre = "Exemple";
+titreLien = "Lien vers Google.ch";
+monArray = ["test", "test2", "test3"];
+
+linkArray = [link("googlech", "http://www.google.ch"), link("googlefr", "http://www.google.fr"), link("googlede", "http://www.google.de")];
+
 title(monTitre);
 subTitle("Mon sous-titre");
 
-monArray = ["test", "test2", "test3"];
+for i from 0 to len(linkArray) {
+    title(linkArray[i])
+};
 
 i = 0;
 while i < 5 {
@@ -15,8 +22,6 @@ bulletedlist {
         addListRow(i)
     }
 };
-
-titreLien = "Lien vers Google.ch";
 
 link(titreLien, "http://www.google.ch");
 

@@ -45,7 +45,6 @@ def compile(self):
     bytecode = ""
     for child in self.children:
         bytecode += child.compile()
-    bytecode = header + bytecode + footer
     return bytecode
 
 @addToClass(AST.FunctionNode)
@@ -159,6 +158,8 @@ if __name__ == "__main__":
     prog = open(sys.argv[1]).read()
     ast = parse(prog)
     compiled = ast.compile()
+
+    compiled = header + compiled + footer
 
     name = os.path.splitext(sys.argv[1])[0]+'.html'
     outfile = open(name, 'w')
