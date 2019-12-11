@@ -102,7 +102,7 @@ class TokenNode(Node):
         self.tok = tok
         
     def __repr__(self):
-        return 'token\n' + repr(self.tok)
+        return 'token\n' + repr(self.tok)  
 
 class IdentifierNode(Node):
     type = "identifier"
@@ -112,10 +112,26 @@ class IdentifierNode(Node):
 
     def __repr__(self):
         return 'identifier\n' + repr(self.tok)
-    
+
+class ArrayNode(Node):
+    type = "array"
+    def __init__(self, children):
+        Node.__init__(self, children)
+
+    def __repr__(self):
+        return 'array (%s)' % len(self.children)
+
+class ArrayValueNode(Node):
+    type = "array-value"
+    def __init__(self, array, index):
+        Node.__init__(self, [array, index])
+
+    def __repr__(self):
+        return 'array-value (%s)' % len(self.children)
+        
 class OpNode(Node):
     def __init__(self, op, children):
-        Node.__init__(self,children)
+        Node.__init__(self, children)
         self.op = op
         try:
             self.nbargs = len(children)
@@ -148,11 +164,11 @@ class IfNode(Node):
 class BulletedListNode(Node):
     type = 'bulleted list'
 
-class ArrayNode(Node):
-    type = 'array'
+class TableNode(Node):
+    type = 'table'
 
-class ArrayRowNode(Node):
-    type = 'array row'
+class TableRowNode(Node):
+    type = 'table row'
 
 class FunctionNode(Node):
     def __init__(self, name, children):

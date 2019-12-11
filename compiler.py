@@ -2,13 +2,16 @@ import AST
 from AST import addToClass
 from functools import reduce
 
+variables = {}
+
 functions = {
     'title' : lambda content: "<h1>" + str(content) + "</h1>",
     'subTitle' : lambda content: "<h3>" + str(content) + "</h3>",
     'paragraph' : lambda content: "<p>" + str(content) + "</p>",
     'addListRow' : lambda content : "<li>" + str(content) + "</li>",
-    'addArrayHeader' : lambda content : "<th>" + str(content) + "</th>",
-    'addArrayElement' : lambda content : "<td>" + str(content) + "</td>"
+    'addTableHeader' : lambda content : "<th>" + str(content) + "</th>",
+    'addTableElement' : lambda content : "<td>" + str(content) + "</td>",
+    'len' : lambda array : len(array)
 }
 
 operator = {
@@ -24,8 +27,6 @@ operator = {
     '!=' : lambda x, y: x != y,
     '%' : lambda x, y: int(x) % int(y)
 }
-
-variables = {}
 
 @addToClass(AST.ProgramNode)
 def compile(self):
@@ -47,6 +48,19 @@ def compile(self):
 @addToClass(AST.IdentifierNode)
 def compile(self):
     return variables[self.tok]
+
+@addToClass(AST.ArrayNode)
+def compile(self):
+    values = []
+    for child in self.children:
+        values.append(child.compile())
+    return values
+
+@addToClass(AST.ArrayValueNode)
+def compile(self):
+    array = self.children[0].compile()
+    index = int(variables[self.children[1].compile()])
+    return variables[array][index]
 
 @addToClass(AST.AssignNode)
 def compile(self):
@@ -97,11 +111,11 @@ def compile(self):
     bytecode += self.children[0].compile()
     return bytecode + "</ul>"
 
-@addToClass(AST.ArrayNode)
+@addToClass(AST.TableNode)
 def compile(self):
     return "<table>" + self.children[0].compile() + "</table>"
 
-@addToClass(AST.ArrayRowNode)
+@addToClass(AST.TableRowNode)
 def compile(self):
     return "<tr>" + self.children[0].compile() + "</tr>"
 
@@ -116,6 +130,7 @@ def compile(self):
         bytecode += body.compile()
 
     return bytecode
+
 
 if __name__ == "__main__":
     from parser_sml import parse

@@ -5,8 +5,8 @@ reserved_words = {
     'from',
     'to',
     'while',
-    'array',
-    'arrayrow',
+    'table',
+    'tablerow',
     'bulletedlist',
     'if'
 }
@@ -20,7 +20,7 @@ tokens = (
     'COMP_OP',
 ) + tuple(map(lambda s : s.upper(), reserved_words))
 
-literals = '()"}{,[]=;'
+literals = '()"}{,][=;'
 
 def t_NUMBER(t):
     r'\d+(\.\d*)?'

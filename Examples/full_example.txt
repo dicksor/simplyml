@@ -2,6 +2,8 @@ monTitre = "Exemple";
 title(monTitre);
 subTitle("Mon sous-titre");
 
+monArray = ["test", "test2", "test3"];
+
 i = 3;
 while i < 10 {
     paragraph(i);
@@ -11,5 +13,29 @@ while i < 10 {
 bulletedlist {
     for i from 0 to 5 {
         addListRow(i)
+    }
+};
+
+for i from 0 to len(monArray) {
+    if(i == 2) {
+        paragraph(monArray[i])
+    }
+};
+
+table {
+    tablerow {
+        addTableHeader("Prénom");
+        addTableHeader("Nom");
+        addTableHeader("Age")
+    };
+    tablerow {
+        addTableElement("Yohann");
+        addTableElement("Loison");
+        addTableElement("21")
+    };
+    tablerow {
+        addTableElement("Vincent");
+        addTableElement("Moulin");
+        addTableElement("21")
     }
 }

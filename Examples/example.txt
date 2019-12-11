@@ -1,17 +1,7 @@
-array {
-    arrayrow {
-        addArrayHeader("Prénom");
-        addArrayHeader("Nom");
-        addArrayHeader("Age")
-    };
-    arrayrow {
-        addArrayElement("Yohann");
-        addArrayElement("Loison");
-        addArrayElement("21")
-    };
-    arrayrow {
-        addArrayElement("Vincent");
-        addArrayElement("Moulin");
-        addArrayElement("21")
+monArray = ["Everest", "Mont-Blanc", "Cervin"];
+
+for i from 0 to len(monArray) {
+    if(i != 2) {
+        paragraph(monArray[i])
     }
 }

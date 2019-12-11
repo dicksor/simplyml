@@ -19,8 +19,8 @@ def p_programme_recursive(p):
 
 def p_statement(p):
     ''' statement : assignation 
-        | structure 
-        | function '''
+        | expression
+        | structure '''
     p[0] = p[1]
 
 def p_structure_while(p):
@@ -28,10 +28,10 @@ def p_structure_while(p):
     p[0] = AST.WhileNode([p[2],p[4]])
 
 def p_structure_for(p):
-    ''' structure : FOR IDENTIFIER FROM NUMBER TO NUMBER '{' programme '}' '''
+    ''' structure : FOR IDENTIFIER FROM expression TO expression '{' programme '}' '''
     variable = AST.IdentifierNode(p[2])
-    fromNumber = AST.TokenNode(p[4])
-    toNumber = AST.TokenNode(p[6])
+    fromNumber = p[4]
+    toNumber = p[6]
     assign = AST.AssignNode([variable, fromNumber])
 
     variable = AST.IdentifierNode(p[2])
@@ -52,13 +52,13 @@ def p_structure_bulleted_list(p):
     ''' structure : BULLETEDLIST '{' programme '}' '''
     p[0] = AST.BulletedListNode(p[3])
 
-def p_structure_array(p):
-    ''' structure : ARRAY '{' programme '}' '''
-    p[0] = AST.ArrayNode(p[3])
+def p_structure_table(p):
+    ''' structure : TABLE '{' programme '}' '''
+    p[0] = AST.TableNode(p[3])
 
-def p_structure_array_row(p):
-    ''' structure : ARRAYROW '{' programme '}' '''
-    p[0] = AST.ArrayRowNode(p[3])
+def p_structure_table_row(p):
+    ''' structure : TABLEROW '{' programme '}' '''
+    p[0] = AST.TableRowNode(p[3])
 
 def p_expression_paren(p):
     ''' expression : '(' expression ')' '''
@@ -66,11 +66,19 @@ def p_expression_paren(p):
 
 def p_expression(p):
     ''' expression : NUMBER 
-        | STRING '''
-    p[0] = AST.TokenNode(p[1])
+        | STRING
+        | array
+        | function '''
+
+    if isinstance(p[1], AST.ArrayNode):
+        p[0] = p[1]
+    elif isinstance(p[1], AST.FunctionNode):
+        p[0] = p[1]
+    else:
+        p[0] = AST.TokenNode(p[1])
 
 def p_expression_identifier(p):
-    "expression : IDENTIFIER"
+    ''' expression : IDENTIFIER '''
     p[0] = AST.IdentifierNode(p[1])
 
 def p_expression_op(p):
@@ -81,19 +89,33 @@ def p_expression_op(p):
 
 def p_assign(p):
     ''' assignation : IDENTIFIER '=' expression '''
-    p[0] = AST.AssignNode([AST.TokenNode(p[1]),p[3]])
+    p[0] = AST.AssignNode([AST.IdentifierNode(p[1]),p[3]])
 
-def p_parameter(p):
-    ''' parameter : expression 
-        | expression ',' parameter '''
-    if len(p) == 2:
-        p[0] = [p[1]]
-    else:
-        p[0] = [p[1]] + p[3]
+def p_array(p):
+    ''' array : '[' parameter ']' '''
+    p[0] = AST.ArrayNode(p[2])
 
 def p_function(p):
     ''' function : IDENTIFIER '(' parameter ')' '''
     p[0] = AST.FunctionNode(p[1], p[3])
+
+def p_array_value(p):
+    ''' expression : IDENTIFIER '[' IDENTIFIER ']' '''
+    array = AST.TokenNode(p[1])
+    index = AST.TokenNode(p[3])
+    p[0] = AST.ArrayValueNode(array, index)
+
+def p_parameter(p):
+    ''' parameter : expression 
+        | expression ',' parameter '''
+    if len(p) == 4:
+        parameters = p[3]
+        parameters.insert(0, p[1])
+        p[0] = parameters
+    elif len(p) == 2:
+        parameters = []
+        parameters.insert(0, p[1])
+        p[0] = parameters
 
 def p_error(p):
     if p:
