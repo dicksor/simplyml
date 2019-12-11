@@ -11,6 +11,7 @@ functions = {
     'addListRow' : lambda content : "<li>" + str(content) + "</li>",
     'addTableHeader' : lambda content : "<th>" + str(content) + "</th>",
     'addTableElement' : lambda content : "<td>" + str(content) + "</td>",
+    'link' : lambda content : "<a href='" + str(content[1]) + "'>" + str(content[0]) + "</a>",
     'len' : lambda array : len(array)
 }
 
@@ -28,17 +29,36 @@ operator = {
     '%' : lambda x, y: int(x) % int(y)
 }
 
+header = "<!DOCTYPE html>"
+header += "<html><head>"
+header += "<meta charset='utf-8'>"
+header += "<title>SimplyML</title>"
+header += "<meta name='viewport' content='width=device-width, initial-scale=1'>"
+header += "<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>"
+header += "</head>"
+header += "<body><div class='container'>"
+
+footer = "</div></body></html>"
+
 @addToClass(AST.ProgramNode)
 def compile(self):
     bytecode = ""
     for child in self.children:
         bytecode += child.compile()
+    bytecode = header + bytecode + footer
     return bytecode
 
 @addToClass(AST.FunctionNode)
 def compile(self):
-    childBytecode = self.children[0].compile()
-    bytecode = functions[self.name](childBytecode)
+
+    if len(self.children) == 1:
+        parameters = self.children[0].compile()
+    else:
+        parameters = []
+        for child in self.children:
+            parameters.append(child.compile())
+            
+    bytecode = functions[self.name](parameters)
     return bytecode
 
 @addToClass(AST.TokenNode)
@@ -113,7 +133,7 @@ def compile(self):
 
 @addToClass(AST.TableNode)
 def compile(self):
-    return "<table>" + self.children[0].compile() + "</table>"
+    return "<table class='table'>" + self.children[0].compile() + "</table>"
 
 @addToClass(AST.TableRowNode)
 def compile(self):

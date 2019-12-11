@@ -1,7 +1,1 @@
-monArray = ["Everest", "Mont-Blanc", "Cervin"];
-
-for i from 0 to len(monArray) {
-    if(i != 2) {
-        paragraph(monArray[i])
-    }
-}
+link("test", "http://www.google.ch")

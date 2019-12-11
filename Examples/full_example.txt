@@ -4,20 +4,28 @@ subTitle("Mon sous-titre");
 
 monArray = ["test", "test2", "test3"];
 
-i = 3;
-while i < 10 {
+i = 0;
+while i < 5 {
     paragraph(i);
     i = i + 1
 };
 
 bulletedlist {
-    for i from 0 to 5 {
+    for i from 0 to 4 {
         addListRow(i)
     }
 };
 
+titreLien = "Lien vers Google.ch";
+
+link(titreLien, "http://www.google.ch");
+
 for i from 0 to len(monArray) {
-    if(i == 2) {
+    if(i == 0) {
+        title(monArray[i])
+    };
+
+    if(i != 0) {
         paragraph(monArray[i])
     }
 };
