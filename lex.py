@@ -24,7 +24,7 @@ literals = '()"}{,][=;'
 
 def t_NUMBER(t):
     r'\d+(\.\d*)?'
-    t.value = float(t.value)
+    t.value = int(t.value)
     return t
 
 def t_STRING(t):
