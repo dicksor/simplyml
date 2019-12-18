@@ -3,6 +3,7 @@ from AST import addToClass
 from functools import reduce
 
 variables = {}
+css = []
 
 functions = {
     'title' : lambda content: "<h1>" + str(content) + "</h1>",
@@ -11,6 +12,7 @@ functions = {
     'addListRow' : lambda content : "<li>" + str(content) + "</li>",
     'addTableHeader' : lambda content : "<th>" + str(content) + "</th>",
     'addTableElement' : lambda content : "<td>" + str(content) + "</td>",
+    'addCssFile' : lambda link : css.append(link),
     'link' : lambda content : "<a href='" + str(content[1]) + "'>" + str(content[0]) + "</a>",
     'len' : lambda array : len(array)
 }
@@ -28,15 +30,6 @@ operator = {
     '!=' : lambda x, y: x != y,
     '%' : lambda x, y: int(x) % int(y)
 }
-
-header = "<!DOCTYPE html>"
-header += "<html><head>"
-header += "<meta charset='utf-8'>"
-header += "<title>SimplyML</title>"
-header += "<meta name='viewport' content='width=device-width, initial-scale=1'>"
-header += "<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>"
-header += "</head>"
-header += "<body><div class='container'>"
 
 footer = "</div></body></html>"
 
@@ -56,9 +49,11 @@ def compile(self):
         parameters = []
         for child in self.children:
             parameters.append(child.compile())
-            
-    bytecode = functions[self.name](parameters)
-    return bytecode
+
+    result = functions[self.name](parameters)
+    if result != None:     
+        return result
+    return ""
 
 @addToClass(AST.TokenNode)
 def compile(self):
@@ -151,6 +146,21 @@ def compile(self):
     return bytecode
 
 
+def formHeader():
+    bytecode = "<!DOCTYPE html>"
+    bytecode += "<html><head>"
+    bytecode += "<meta charset='utf-8'>"
+    bytecode += "<title>SimplyML</title>"
+    bytecode += "<meta name='viewport' content='width=device-width, initial-scale=1'>"
+
+    bytecode += "<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>"
+    for css_file in css:
+        bytecode += "<link rel='stylesheet' href='" + css_file + "'>"
+    bytecode += "</head>"
+    bytecode += "<body><div class='container'>"
+
+    return bytecode
+
 if __name__ == "__main__":
     from parser_sml import parse
     import sys, os
@@ -159,7 +169,7 @@ if __name__ == "__main__":
     ast = parse(prog)
     compiled = ast.compile()
 
-    compiled = header + compiled + footer
+    compiled = formHeader() + compiled + footer
 
     name = os.path.splitext(sys.argv[1])[0]+'.html'
     outfile = open(name, 'w')

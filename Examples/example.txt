@@ -1,1 +1,3 @@
-link("test", "http://www.google.ch")
+title("Salut");
+addCssFile("monCSS.css");
+link("www.google.ch", "Salut")
