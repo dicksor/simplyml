@@ -1,4 +1,3 @@
-addCssFile("monCSS.css");
 addCssFile("monCSS2.css");
 
 monTitre = "Exemple";
@@ -16,26 +15,8 @@ for i from 0 to len(linkArray) {
 
 i = 0;
 while i < 5 {
-    paragraph(i);
+    paragraph(i + 5);
     i = i + 1
-};
-
-bulletedlist {
-    for i from 0 to 4 {
-        addListRow(i)
-    }
-};
-
-link(titreLien, "http://www.google.ch");
-
-for i from 0 to len(monArray) {
-    if(i == 0) {
-        title(monArray[i])
-    };
-
-    if(i != 0) {
-        paragraph(monArray[i])
-    }
 };
 
 table {
@@ -53,5 +34,23 @@ table {
         addTableElement("Vincent");
         addTableElement("Moulin");
         addTableElement("21")
+    }
+};
+
+bulletedlist {
+    for i from 0 to 4 {
+        addListRow(i)
+    }
+};
+
+link(titreLien, "http://www.google.ch");
+
+for i from 0 to len(monArray) {
+    if(i == 0) {
+        title(monArray[i])
+    };
+
+    if(i != 0) {
+        paragraph(monArray[i])
     }
 }
