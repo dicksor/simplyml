@@ -2,9 +2,13 @@ import AST
 from AST import addToClass
 from functools import reduce
 
+# Dictionnary who contains variables with their value
 variables = {}
+
+# python list who contains link to css file
 css = []
 
+# content all function inside this dictionnary comprehension
 functions = {
     'title' : lambda content: "<h1>" + str(content) + "</h1>",
     'subTitle' : lambda content: "<h3>" + str(content) + "</h3>",
@@ -17,6 +21,7 @@ functions = {
     'len' : lambda array : len(array)
 }
 
+# content all operators inside this dictionnary comprehension
 operator = {
     '<' : lambda x, y: x < y,
     '>' : lambda x, y: x > y,
@@ -31,6 +36,7 @@ operator = {
     '%' : lambda x, y: int(x) % int(y)
 }
 
+# define html code for footer
 footer = "</div></body></html>"
 
 @addToClass(AST.ProgramNode)
@@ -89,7 +95,6 @@ def compile(self):
     y = self.children[1].compile()
 
     result = operator[self.op](x, y)
-    #print("%s %s %s = %s" % (x, self.op, y, result))
     return result
 
 @addToClass(AST.WhileNode)
@@ -145,7 +150,7 @@ def compile(self):
 
     return bytecode
 
-
+# return string for the header of the html file
 def formHeader():
     bytecode = "<!DOCTYPE html>"
     bytecode += "<html><head>"
@@ -154,8 +159,11 @@ def formHeader():
     bytecode += "<meta name='viewport' content='width=device-width, initial-scale=1'>"
 
     bytecode += "<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>"
+    
+    # iterate on css list for adding css file
     for css_file in css:
         bytecode += "<link rel='stylesheet' href='" + css_file + "'>"
+    
     bytecode += "</head>"
     bytecode += "<body><div class='container'>"
 
@@ -169,8 +177,10 @@ if __name__ == "__main__":
     ast = parse(prog)
     compiled = ast.compile()
 
+    # Add the header and footer to the compiled html
     compiled = formHeader() + compiled + footer
 
+    # Define name of the file, open it and write our output inside
     name = os.path.splitext(sys.argv[1])[0]+'.html'
     outfile = open(name, 'w')
     outfile.write(compiled)

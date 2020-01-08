@@ -1,5 +1,6 @@
 import ply.lex as lex
 
+# Define reserved words
 reserved_words = {
     'for',
     'from',
@@ -11,6 +12,7 @@ reserved_words = {
     'if'
 }
 
+# Define token
 tokens = (
     'NUMBER',
     'STRING',
@@ -18,7 +20,7 @@ tokens = (
     'ADD_OP',
     'MUL_OP',
     'COMP_OP',
-) + tuple(map(lambda s : s.upper(), reserved_words))
+) + tuple(map(lambda s : s.upper(), reserved_words)) # add the reserved word to token
 
 literals = '()"}{,][=;'
 
