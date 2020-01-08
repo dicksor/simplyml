@@ -136,7 +136,7 @@ if __name__ == "__main__":
     print(os.getcwd())
 
     prog = open(sys.argv[1]).read()
-    result = yacc.parse(prog, debug=True)
+    result = yacc.parse(prog)
     if result:
         print (result)
         os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
