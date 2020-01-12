@@ -1,4 +1,13 @@
-a
+h1
 {
-	color: orange;
+	color: blue;
+}
+p
+{
+	font-weight: bold;
+}
+th
+{
+	color: red;
+	font-style: italic;
 }
