@@ -1,0 +1,40 @@
+addCssFile("monCSS2.css");
+
+title("Welcome on example number 2 !");
+
+linkArray = [link("Example numéro 1", "example1.html"), link("Example numéro 3", "example3.html")];
+
+i = 0;
+while i < len(linkArray) {
+    paragraph(linkArray[i]);
+    i = i + 1
+};
+
+sub = "Example of array :";
+subTitle(sub);
+
+MIN = 1;
+MAX = 6;
+
+table {
+    tablerow {
+        for i from MIN to MAX
+        {
+        	addTableHeader(i)
+        }
+    };
+    
+    for j from MIN to MAX
+    {
+    	tablerow {
+	        for k from MIN to MAX
+	        {
+	        	addTableElement(k*j)
+	        }
+    	}
+    }
+};
+
+title("End of web site...")
+
+

@@ -1,0 +1,23 @@
+addCssFile("monCSS.css");
+titrePage = "Bienvenue sur notre site internet";
+
+title(titrePage);
+subTitle("Exemple numéro 1");
+
+linkArray = [link("Example numéro 2", "example2.html"), link("Example numéro 3", "example3.html")];
+countryArray = ["Suisse", "Indonésie", "USA", "Danemark"];
+
+for i from 0 to len(linkArray) {
+    paragraph(linkArray[i])
+};
+
+subTitle("Pays :");
+
+bulletedlist {
+    for i from 0 to len(countryArray) {
+        if(countryArray[i] != "USA")
+        {
+        	addListRow(countryArray[i])
+        }
+    }
+}

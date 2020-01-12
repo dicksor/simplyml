@@ -1,0 +1,33 @@
+addCssFile("monCSS3.css");
+
+title("Example 3");
+
+testExample = "List of Example";
+subTitle(testExample);
+
+exampleArray = ["example1", "example2", "example3"];
+
+bulletedlist {
+	for i from 0 to len(exampleArray) {
+	    if(i == 2) {
+	        addListRow("this one is : " + title(exampleArray[i]))
+	    };
+
+	    if(i != 2) {
+	        addListRow(link("aller à " + exampleArray[i], exampleArray[i] + ".html"))
+	    }
+	}
+};
+
+subTitle("list of all even year from 2010 to 2020");
+
+start = 2010;
+end = 2020;
+
+while start <= end {
+    if((start % 2) == 0)
+    {
+    	paragraph(start)
+    };
+    start = start + 1
+}

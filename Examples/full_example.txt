@@ -1,0 +1,56 @@
+addCssFile("monCSS2.css");
+
+monTitre = "Exemple";
+titreLien = "Lien vers Google.ch";
+monArray = ["test", "test2", "test3"];
+
+linkArray = [link("googlech", "http://www.google.ch"), link("googlefr", "http://www.google.fr"), link("googlede", "http://www.google.de")];
+
+title(monTitre);
+subTitle("Mon sous-titre");
+
+for i from 0 to len(linkArray) {
+    title(linkArray[i])
+};
+
+i = 0;
+while i < 5 {
+    paragraph(i + 5);
+    i = i + 1
+};
+
+table {
+    tablerow {
+        addTableHeader("Prénom");
+        addTableHeader("Nom");
+        addTableHeader("Age")
+    };
+    tablerow {
+        addTableElement("Yohann");
+        addTableElement("Loison");
+        addTableElement("21")
+    };
+    tablerow {
+        addTableElement("Vincent");
+        addTableElement("Moulin");
+        addTableElement("21")
+    }
+};
+
+bulletedlist {
+    for i from 0 to 4 {
+        addListRow(i)
+    }
+};
+
+link(titreLien, "http://www.google.ch");
+
+for i from 0 to len(monArray) {
+    if(i == 0) {
+        title(monArray[i])
+    };
+
+    if(i != 0) {
+        paragraph(monArray[i])
+    }
+}
